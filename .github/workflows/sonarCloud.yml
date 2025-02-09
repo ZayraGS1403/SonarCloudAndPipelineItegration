@@ -30,7 +30,7 @@
             key: ${{ runner.os }}-sonar
             restore-keys: ${{ runner.os }}-sonar
 
-        - name: Build and analyze with SonarCloud
+        - name: Build with JaCoCo and analyze with SonarCloud
           env:
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           run: |
@@ -40,3 +40,4 @@
               -Dsonar.host.url=https://sonarcloud.io \
               -Dsonar.branch.name=main \
               -Dsonar.token=$SONAR_TOKEN
+              -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
