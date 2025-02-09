@@ -9,7 +9,7 @@
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <sonar.organization>Picada</sonar.organization>
+        <sonar.organization>picada</sonar.organization>
         <sonar.projectKey>ZayraGS1403_SonarCloudAndPipelineItegrtion</sonar.projectKey>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
