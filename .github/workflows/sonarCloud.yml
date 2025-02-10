@@ -44,6 +44,13 @@
               -Dsonar.token=$SONAR_TOKEN \
               -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
         - name: Wait for SonarCloud Quality Gate
-          uses: sonarsource/sonarcloud-quality-gate-action@main
+          run: |
+            sleep 20
+            SONAR_STATUS=$(curl -s -u $SONAR_TOKEN: "https://sonarcloud.io/api/qualitygates/project_status?projectKey=${{ secrets.SONAR_PROJECT_KEY }}" | jq -r .projectStatus.status)
+            echo "SonarCloud Quality Gate Status: $SONAR_STATUS"
+            if [[ "$SONAR_STATUS" != "OK" ]]; then
+              echo "❌ Quality Gate failed. PR cannot be merged."
+              exit 1
+            fi
           env:
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
