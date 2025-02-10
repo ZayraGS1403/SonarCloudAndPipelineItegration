@@ -44,6 +44,6 @@
               -Dsonar.token=$SONAR_TOKEN \
               -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
         - name: Wait for SonarCloud Quality Gate
-          uses: sonarsource/sonarcloud-quality-gate-action@master
+          uses: sonarsource/sonarcloud-quality-gate-action@main
           env:
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
