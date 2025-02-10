@@ -1,5 +1,5 @@
   name: SonarCloud Analysis
-
+  
   on:
     push:
       branches:
@@ -7,50 +7,14 @@
     pull_request:
       branches:
         - main
-
+  
   jobs:
     sonarcloud:
-      name: SonarCloud Scan
-      runs-on: ubuntu-latest
-
-      steps:
-        - name: Checkout repository
-          uses: actions/checkout@v4
-
-        - name: Set up JDK
-          uses: actions/setup-java@v3
-          with:
-            distribution: 'temurin'
-            java-version: '21'
-
-        - name: Cache SonarCloud packages
-          uses: actions/cache@v3
-          with:
-            path: ~/.sonar/cache
-            key: ${{ runner.os }}-sonar
-            restore-keys: ${{ runner.os }}-sonar
-
-        - name: Build with JaCoCo and analyze with SonarCloud
-          env:
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-            SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
-            SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
-          run: |
-            mvn clean verify sonar:sonar \
-              -Dsonar.organization=$SONAR_ORGANIZATION \
-              -Dsonar.projectKey=$SONAR_PROJECT_KEY \
-              -Dsonar.host.url=https://sonarcloud.io \
-              -Dsonar.branch.name=main \
-              -Dsonar.token=$SONAR_TOKEN \
-              -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
-        - name: Wait for SonarCloud Quality Gate
-          run: |
-            sleep 20
-            SONAR_STATUS=$(curl -s -u $SONAR_TOKEN: "https://sonarcloud.io/api/qualitygates/project_status?projectKey=${{ secrets.SONAR_PROJECT_KEY }}" | jq -r .projectStatus.status)
-            echo "SonarCloud Quality Gate Status: $SONAR_STATUS"
-            if [[ "$SONAR_STATUS" != "OK" ]]; then
-              echo "❌ Quality Gate failed. PR cannot be merged."
-              exit 1
-            fi
-          env:
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      uses: ZayraGS1403/central-pipelines/.github/workflows/sonarcloud-analysis.yml@main
+      with:
+        java-version: '21'
+        branch-name: 'main'
+      secrets:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
+        SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
