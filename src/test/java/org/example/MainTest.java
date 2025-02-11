@@ -3,7 +3,6 @@ package org.example;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
-
 public class MainTest {
     @Test
     public void testSum() {
@@ -11,4 +10,5 @@ public class MainTest {
         assertEquals(5, app.sum(2, 3));
     }
 
+    // Falta de pruebas para otros métodos
 }
