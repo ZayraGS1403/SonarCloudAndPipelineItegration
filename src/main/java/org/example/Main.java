@@ -4,6 +4,8 @@ package org.example;
  * Clase principal con métodos de utilidad.
  */
 public class Main {
+
+
     public static void main(String[] args) {
         Main app = new Main();
         int resultado = app.sumar(2, 3);
