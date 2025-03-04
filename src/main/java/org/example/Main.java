@@ -11,6 +11,7 @@ public class Main {
         int resultado = app.sumar(2, 3);
         System.out.println("La suma es: " + resultado);
     }
+    
 
     /**
      * Método para sumar dos números enteros.
